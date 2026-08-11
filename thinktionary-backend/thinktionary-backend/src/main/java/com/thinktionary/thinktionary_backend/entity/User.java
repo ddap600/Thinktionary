@@ -39,5 +39,10 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    public User(String displayName, String username, String password) {
+        this.displayName = displayName;
+        this.username = username;
+        this.password = password;
+    }
 
 }
