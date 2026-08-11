@@ -8,6 +8,7 @@ import com.thinktionary.thinktionary_backend.exception.ResourceNotFoundException
 import com.thinktionary.thinktionary_backend.mapper.UserMapper;
 import com.thinktionary.thinktionary_backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /// Get All Users
     public List<UserResponseDto> getAllUsers() {
@@ -45,10 +47,18 @@ public class UserService {
     /// Create User
     public UserResponseDto createUser(UserCreateRequestDto userCreateRequestDto) {
 
+        // Instead of using the mapper to map the DTO to a new User
+        // We do it this way, so that password hashing is in the Service instead of the mapper
+
+        // Using the mapper to create a User object and then encoding it here
+        // Would temporarily and briefly create a User object with exposed password
+
+        // Moving the encoder to mapper to avoid this sounds messier than keeping it here
+
         User user = new User(
                 userCreateRequestDto.getDisplayName(),
                 userCreateRequestDto.getUsername(),
-                userCreateRequestDto.getPassword()
+                passwordEncoder.encode(userCreateRequestDto.getPassword())
                 // TODO: Assign the default USER role during registration/auth setup.
         );
 
