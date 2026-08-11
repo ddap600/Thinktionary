@@ -75,9 +75,11 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
-        existingUser.setDisplayName(userUpdateRequestDto.getDisplayName());
-        existingUser.setUsername(userUpdateRequestDto.getUsername());
-
+        UserMapper.mapUserUpdateRequestDtoToUser(
+                userUpdateRequestDto,
+                existingUser
+        );
+        
         User updatedUser = userRepository.save(existingUser);
 
         UserResponseDto userResponseDto = UserMapper.mapUserToUserResponseDto(updatedUser);
