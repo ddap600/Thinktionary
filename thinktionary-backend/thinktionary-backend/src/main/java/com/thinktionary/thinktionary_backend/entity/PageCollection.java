@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Entity
 @Table(name = "collections")
-public class Collection {
+public class PageCollection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,10 @@ public class Collection {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    //TODO: List of collaborators.
+    @OneToMany(mappedBy = "pageCollection")
+    private List<Page> pages;
+
+    // TODO: Add collection collaborators/permissions.
 
     @Column(name = "created_at")
     private Instant createdAt;

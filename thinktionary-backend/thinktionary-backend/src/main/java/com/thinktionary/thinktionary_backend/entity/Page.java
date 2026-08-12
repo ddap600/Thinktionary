@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "page")
+@Table(name = "pages")
 public class Page {
 
     @Id
@@ -23,6 +23,14 @@ public class Page {
 
     @Column(name = "content")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
+    @ManyToOne
+    @JoinColumn(name = "collection_id")
+    private PageCollection pageCollection;
 
     public Page(String title, String content) {
         this.title = title;
