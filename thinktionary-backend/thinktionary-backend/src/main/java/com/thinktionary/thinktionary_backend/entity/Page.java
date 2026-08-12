@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -31,6 +33,9 @@ public class Page {
     @ManyToOne
     @JoinColumn(name = "collection_id")
     private PageCollection pageCollection;
+
+    @OneToMany(mappedBy = "page")
+    private List<PageComponent> components;
 
     public Page(String title, String content) {
         this.title = title;
