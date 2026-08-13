@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "page")
+@Table(name = "pages")
 public class Page {
 
     @Id
@@ -23,6 +25,17 @@ public class Page {
 
     @Column(name = "content")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
+    @ManyToOne
+    @JoinColumn(name = "collection_id")
+    private PageCollection pageCollection;
+
+    @OneToMany(mappedBy = "page")
+    private List<PageComponent> components;
 
     public Page(String title, String content) {
         this.title = title;

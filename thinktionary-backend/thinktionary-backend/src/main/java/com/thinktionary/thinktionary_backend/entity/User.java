@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -30,7 +31,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -38,6 +38,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "owner")
+    private List<Page> pages;
+
+    @OneToMany(mappedBy = "owner")
+    private List<PageCollection> collections;
 
     public User(String displayName, String username, String password) {
         this.displayName = displayName;
