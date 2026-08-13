@@ -20,6 +20,9 @@ public class PageComponent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "page_id", nullable = false)
     private Page page;
@@ -35,4 +38,20 @@ public class PageComponent {
 
     @Column(name = "column_index")
     private Integer columnIndex;
+
+    public PageComponent(
+            String name,
+            String type,
+            String content,
+            Integer position,
+            Integer columnIndex
+    ) {
+        this.name = name;
+        this.type = type;
+        this.content = content;
+        this.position = position;
+        this.columnIndex = position;
+    }
+
+
 }

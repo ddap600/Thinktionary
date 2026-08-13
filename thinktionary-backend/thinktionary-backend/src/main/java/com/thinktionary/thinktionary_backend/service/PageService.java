@@ -44,7 +44,7 @@ public class PageService {
     /// Create Page
     public PageResponseDto createPage(PageCreateRequestDto pageCreateRequestDto) {
 
-        Page page = pageRepository.save(PageMapper.mapPageCreateDtoToPage(pageCreateRequestDto));
+        Page page = pageRepository.save(PageMapper.mapPageCreateRequestToPage(pageCreateRequestDto));
         PageResponseDto pageResponseDto = PageMapper.mapPageToPageResponseDto(page);
 
         return pageResponseDto;
@@ -53,11 +53,11 @@ public class PageService {
     /// Update Page
     public PageResponseDto updatePage(Long id, PageUpdateRequestDto pageUpdateRequestDto) {
 
-        Page oldPage = pageRepository.findById(id)
+        Page existingPage = pageRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Selected Page does not exist!"));
 
-        PageMapper.mapPageUpdateDtoToPage(pageUpdateRequestDto, oldPage);
-        Page updatedPage = pageRepository.save(oldPage);
+        PageMapper.mapPageUpdateRequestToPage(pageUpdateRequestDto, existingPage);
+        Page updatedPage = pageRepository.save(existingPage);
         PageResponseDto pageResponseDto = PageMapper.mapPageToPageResponseDto(updatedPage);
 
         return pageResponseDto;

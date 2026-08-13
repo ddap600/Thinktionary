@@ -41,4 +41,13 @@ public class PageCollection {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+
+    public PageCollection(
+            String name,
+            String description
+    ) {
+        this.name = name;
+        this.description = description;
+    }
 }
