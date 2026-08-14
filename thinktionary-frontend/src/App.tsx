@@ -1,8 +1,12 @@
-import { useState } from "react";
+import LoginSignup from "./components/LoginSignup/LoginSignup";
 import "./App.css";
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <LoginSignup />
+    </div>
+  );
 }
 
 export default App;
