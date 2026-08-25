@@ -26,7 +26,7 @@ public class AuthController {
         AuthResponseDto authResponseDto = authService.loginUser(authLoginRequestDto);
 
         ResponseCookie responseCookie = ResponseCookie
-                .from("token", authResponseDto.getToken())
+                .from("session", authResponseDto.getToken())
                 .httpOnly(true)
                 .build();
 
