@@ -5,6 +5,9 @@ import com.thinktionary.thinktionary_backend.dto.AuthResponseDto;
 import com.thinktionary.thinktionary_backend.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +24,20 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> loginUser(@Valid @RequestBody AuthLoginRequestDto authLoginRequestDto) {
         AuthResponseDto authResponseDto = authService.loginUser(authLoginRequestDto);
-        return ResponseEntity.ok(authResponseDto);
+
+        ResponseCookie responseCookie = ResponseCookie
+                .from("token", authResponseDto.getToken())
+                .httpOnly(true)
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, responseCookie.toString());
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(authResponseDto);
+
     }
 
     @GetMapping("/token-test")
