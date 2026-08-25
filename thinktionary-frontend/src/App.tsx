@@ -1,12 +1,21 @@
 import LoginSignup from "./components/LoginSignup/LoginSignup";
 import "./App.css";
 
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+
 function App() {
-  return (
-    <div>
-      <LoginSignup />
-    </div>
-  );
+    return (
+
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/login" element={<LoginSignup/>}/>
+                </Routes>
+            </BrowserRouter>
+        </>
+    );
+
 }
 
 export default App;
