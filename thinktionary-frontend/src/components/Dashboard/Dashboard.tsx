@@ -12,7 +12,9 @@ function Dashboard() {
     const [pageCollections, setPageCollections] = useState<PageCollection[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/collection")
+        fetch("http://localhost:8080/collection/mine", {
+            credentials: "include"
+        })
             .then(res => res.json())
             .then(data => setPageCollections(data));
     }, []);

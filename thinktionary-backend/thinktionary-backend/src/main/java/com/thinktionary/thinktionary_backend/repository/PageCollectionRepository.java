@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface PageCollectionRepository extends JpaRepository<PageCollection, Long> {
 
-    List<PageCollection> findByOwner(User owner);
+    List<PageCollection> findByOwnerId(Long ownerId);
+
 }

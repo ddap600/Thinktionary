@@ -39,6 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Get Token from Cookie
         Cookie[] cookies = request.getCookies();
+        //TODO : REMOVE
+        System.out.println("COOKIES : " + cookies);
 
         // Let the filter decide what to do with unauthenticated requests
         if(cookies == null) {
@@ -105,6 +107,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
+        // TODO : REMOVE
+        System.out.println("AUTHENTICATED AS : " + username);
 
         // Sends the request to the rest of the filter chain (even if not authenticated).
         //

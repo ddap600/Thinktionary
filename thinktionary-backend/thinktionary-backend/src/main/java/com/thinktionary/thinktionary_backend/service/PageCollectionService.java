@@ -4,10 +4,13 @@ import com.thinktionary.thinktionary_backend.dto.PageCollectionCreateRequestDto;
 import com.thinktionary.thinktionary_backend.dto.PageCollectionResponseDto;
 import com.thinktionary.thinktionary_backend.dto.PageCollectionUpdateRequestDto;
 import com.thinktionary.thinktionary_backend.entity.PageCollection;
+import com.thinktionary.thinktionary_backend.entity.User;
 import com.thinktionary.thinktionary_backend.exception.ResourceNotFoundException;
 import com.thinktionary.thinktionary_backend.mapper.PageCollectionMapper;
 import com.thinktionary.thinktionary_backend.repository.PageCollectionRepository;
+import com.thinktionary.thinktionary_backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +20,29 @@ import java.util.List;
 public class PageCollectionService {
 
     private final PageCollectionRepository pageCollectionRepository;
+    private final UserRepository userRepository;
 
     // TODO: This is not the final version, this will need changes
+
+    /// Get Page Collection By Owner
+    public List<PageCollectionResponseDto> getAllPageCollectionsByOwner(Authentication authentication) {
+
+        // TODO : REMOVE
+        System.out.println("TEST:" + authentication.toString());
+
+        User user = userRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        System.out.println(user);
+
+        List<PageCollection> pageCollections = pageCollectionRepository.findByOwnerId(user.getId());
+
+        List<PageCollectionResponseDto> pageCollectionResponseDtos = pageCollections.stream()
+                .map(PageCollectionMapper::mapPageCollectionToPageCollectionResponseDto)
+                .toList();
+
+        return pageCollectionResponseDtos;
+    }
 
     /// Get All PageCollections
     public List<PageCollectionResponseDto> getAllPageCollections() {

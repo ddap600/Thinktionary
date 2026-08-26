@@ -24,6 +24,7 @@ function LoginSignup() {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include",
             body: JSON.stringify({
                 username: username,
                 password: password
@@ -38,7 +39,7 @@ function LoginSignup() {
         console.log(token);
 
         if (response.ok) {
-            navigate("/login-success");
+            navigate("/dashboard");
         }
 
     }
